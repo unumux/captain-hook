@@ -33,14 +33,26 @@ module.exports = function(grunt) {
                 },
                 src: ['test/*.js']
             }
+        },
+        jsdoc : {
+            dist : {
+                src: ['index.js'],
+                options: {
+                    destination: 'doc',
+                    configure: "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            }
         }
     });
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
-    // Default task.
     grunt.registerTask('test', ['jshint', 'mochaTest']);
+    grunt.registerTask('default', ['jsdoc', 'test']);
+
+
 
 };
