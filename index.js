@@ -61,11 +61,11 @@ CaptainHook.prototype.inject = function (blockID, injections, injectTemplate) {
 
     var originalTags = this.getBlockContents(this.commentTags);
 
-    // if comment block cannot be found, don't continue
+    // if comment block cannot be found, don't continue and return the current template
     if(originalTags === false) {
-        return false;
+        return this.template;
     }
-    
+
     var indexes = this.getBlockIndexes(this.commentTags);
 
     var indentation = this.template.substring(this.template.substring(0, indexes.begin).lastIndexOf('\n'), indexes.begin);
