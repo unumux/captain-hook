@@ -60,30 +60,33 @@ CaptainHook.prototype.inject = function (blockID, injections, injectTemplate) {
     this.commentTags = this.generateCommentTags(blockID);
 
     var originalTags = this.getBlockContents(this.commentTags);
+
     var indexes = this.getBlockIndexes(this.commentTags);
 
     var indentation = this.template.substring(this.template.substring(0, indexes.begin).lastIndexOf('\n'), indexes.begin);
 
+    /* create a new line before the indentation, in case one does not exist (like at the start of the file) */
     if(indentation.indexOf("\n") < 0) {
         indentation = "\n" + indentation;
     }
 
-    var toInject = [this.commentTags.begin];
-
-    injections.forEach(function(file) {
-        toInject.push(this.createTag(file));
+    var toInject = injections.map(function(file) {
+        return this.createTag(file);
     }.bind(this));
 
     var newInject = _.union(originalTags, toInject);
-
     _.remove(newInject, function(n) {
         return toInject.indexOf(n) < 0;
     });
 
-    toInject.push(this.commentTags.end);
+    newInject.unshift(this.commentTags.begin);
+    newInject.push(this.commentTags.end);
 
 
-    this.template = this.template.substring(0, indexes.begin) + toInject.join(indentation) + this.template.substr(indexes.end);
+    var newTemplate = this.template.substring(0, indexes.begin);
+    newTemplate += newInject.join(indentation);
+    newTemplate += this.template.substr(indexes.end);
+    this.template = newTemplate;
     return this.template;
 
 };
