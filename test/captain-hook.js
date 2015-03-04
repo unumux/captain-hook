@@ -87,6 +87,14 @@ describe("CaptainHook()", function () {
             expect(result).to.equal(expected.append);
         });
 
+        it("should respect existing sorting", function () {
+            var result;
+            var existingOrder = new CaptainHook(fixtures.existingOrder);
+            existingOrder.inject('js', ['site1.js', 'site2.js', 'site3.js', 'site4.js']);
+            result = existingOrder.inject('css', ['site1.css', 'site2.css', 'site3.css']);
+            expect(result).to.equal(expected.existingOrder);
+        });
+
         it("should remove references that are no longer in the injection array", function () {
             var result;
             append.inject('js', ['site1.js', 'site2.js']);
