@@ -111,8 +111,9 @@ describe("CaptainHook()", function () {
         it("should not change the file if comment tag is not found", function () {
             var result;
             var thisInstance = new CaptainHook(fixtures.messedUp);
-            thisInstance.inject('scss', ['_partial1.scss', '_partial2.scss', '_partial3.scss']);
+            expect(thisInstance.inject('scss', ['_partial1.scss', '_partial2.scss', '_partial3.scss'])).to.equal(expected.messedUp);
             expect(thisInstance.template).to.equal(expected.messedUp);
+
         });
 
     });
