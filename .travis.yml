@@ -1,3 +1,12 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
+deploy:
+  provider: npm
+  email: chuckhendo@gmail.com
+  api_key:
+    secure: a5TH8tW714TRuVfZ9W6A4ylN5gAleFCKfV6kkfyiEUK7q/MFarImersxwyjdhIdaCcn0ubqeuvkWWFipXo726tMGweLzJAwPnTiai/jb08FjThxtopVCBe0zXQIitSXmmp8oJDEjii91xCR7ciGTxalju2DG3yrn4pUdl0JKW3Q=
+  on:
+    tags: true
+    repo: unumux/lib-captain-hook
+    branch: master
